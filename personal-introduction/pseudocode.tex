@@ -1,0 +1,31 @@
+\documentclass{article}
+\usepackage[legalpaper,, margin=1in]{geometry}
+
+\begin{document}
+    \section{SETUP()} size(1000,1000); //subject to change \\ textSize(48); //subject to change \\ textAlign(RIGHT); //subject to change
+    \section{VARIABLES}String name; \\int age; \\String dogName; \\String family;\\IIntroduction activeFact;
+    \section{INTERFACES:}interface IIntroduction {}
+    \section{METHODS:}IIntroduction.compareNumber(int number) ... boolean \\ IIntroduction.isImage() ... boolean\\IIntroduction.nextFact() ... IFact\\IIntroduction.diaplay() ... void
+    \section{CLASSES:}Fact(int displayNumber, IFact next, String text) implements fact \\Image(int displayNumber, IFact next, String imageName) implements fact
+    \section{INPUT:} mouse clicks or time
+    \section{ORDER:}
+        \subsection{fact1}displayNumber = 1 \\nextFact = imageMe\\text = "Hi my name is Paul Plew but I usually go by the name PT"
+        \subsection{imageMe}displayNumber = 2 \\nextFact = fact2\\imageName = "me.jpg"
+        \subsection{fact2}displayNumber = 3 \\nextFact = fact3\\text = "I am 19 years old but by the time you're grading this I will probably be 20!
+        \subsection{fact3}
+        displayNumber = 4 \\  nextFact = imageHome\\text = "I moved to Boston from Los Angeles (and I am really missing it during these cold winter months)"
+        \subsection{imageHome}
+        displayNumber = 5 \\nextFact = fact4\\imageName = "los-angeles.jpg"
+        \subsection{fact4}
+        displayNumber = 6 \\nextFact = imageFamily\\text = Back at home I have an older sister a brother in law and two amazing parents"
+        \subsection{imageFamily}
+        displayNumber = 7 \\nextFact = fact5\\imageName = "family-photo.jpg"
+        \subsection{fact5}
+        displayNumber = 8 \\ nextFact = fact6\\ text = "I am a Combined Computer Science and Design Major; so far I am really enjoying it"
+        \subsection{fact6}
+        displayNumber = 9 \\ nextFact = fact1\\ text = "Back at home I have 3 dogs and a cat, all whom I love and miss with all my heart"
+        \subsection{imageDogs}
+        displayNumber = 10 \\ nextFact = fact1 \\ imageName = "theboys.jpg"
+    \section{DRAW()}
+        IF the time in seconds is divisible by 5 THEN \\ \indent activeFact = activeFact.nextFact(); \\ ELSE \\ \indent activeFact.display(); \\ 
+\end{document}
