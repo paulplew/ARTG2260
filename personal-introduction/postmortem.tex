@@ -1,0 +1,21 @@
+\documentclass[12 pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyvrb}
+\setlength\parindent{24pt}
+
+\title{Project 1 Post-Mortem}
+\author{Paul Plew}
+\date{February 09, 2021}
+
+\begin{document}
+
+\maketitle
+
+\section{Post-Mortem}
+\hspace{\parindent} The premise of this project is straightforward, introduce yourself using a short program that runs in 30 seconds or 10 clicks. In my final program I used a switch statement that was triggered by the current factNumber. In addition to the int factNumber I had a variable of type Boolean called isImage. As factNumber counted up the switch statement would update the String factText to whatever slide the user is currently on. All of these variables are global so at the end of draw() I made a call to a method called show() and it was able to see and update these variables as needed. The show() method would check to see if isImage was false and if it was it would execute with the text centered in an invisible box on the screen. If isImage was true however, an else would trigger that displayed the image on the left side of the screen and the text centered directly to its right. Then draw() would loop again resetting isImage to false and going through the switch statement. In order to increment the factNumber I implemented a mouseClicked() with functionality to check if factNumber was less than or equal to the number of facts/images and add one if the mouse was clicked, otherwise factNumber would be reset to 0. Finally, I implemented a method to change the background as the mouse is moved around the screen. This method uses map on mouseX and mouseY to change the red and blue values of background(int, int, int) as the mouse is moved within two preset values that are my favorite colors. 
+\section{Issues}
+\hspace{\parindent} In the pseudocode for this project, I decided to create a class that was self-referential to other objects of the same class. I would create an interface that represents a single slide. I then had the idea to create 2 classes that implement this interface where each stores another object of the type Slide and represents the next slide. Then draw() could simply store that object in a global variable and call a method in the interface that displays the object depending on what type it is. The idea in my pseudocode was a little bit too ambitious for the skills I had at the time. I was unable to get it to work, so in my final design I scrapped the whole idea. The final code that I turned in was simpler but carried the same functionality. 
+\section{Changes and Upgrades}
+\hspace{\parindent} Functionality wise my project worked the way I wanted it to. I waited until it was late to start and felt rushed at the end, so I didn’t have a lot of time to work through the problems in my pseudocode, so I just changed it. In the next project I want to give myself enough time to realize the goals I create for myself in the pseudocode. I will also do more extensive bug testing because as the projects increase in difficulty the room for bugs will do so alongside it. 
+
+\end{document}
