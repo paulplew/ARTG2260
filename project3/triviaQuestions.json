@@ -1,0 +1,95 @@
+{
+	"numberOfQuestions": 10,
+	"questions": [
+		{ "question":"What is the name of the star closest to Earth?",
+		  "answers": [
+		      	{ "text": "Sirius", "isCorrect": false },
+		      	{ "text": "The Sun", "isCorrect": true },
+		      	{ "text": "Alpha Centauri", "isCorrect": false },
+		      	{ "text": "Barnard's Star", "isCorrect": false }
+		  	],
+		  "feedback": "Yes, the sun is actually a star! It is classified as a yellow dwarf star, and is only 92.96 million miles away from our home (assuming you live on earth)."
+		},
+		{ "question": "What was the name of the first manned NASA mission that went to the moon?",
+		  "answers": [
+		      	{ "text": "Apollo 13", "isCorrect": false },
+		      	{ "text": "Surveyor 5", "isCorrect": false },
+		      	{ "text": "Aollo 11", "isCorrect": true },
+		      	{ "text": "Starship SN11", "isCorrect": false }
+		  	],
+		  "feedback": "Apollo 11 was the first manned mission to the moon! It launched on July 16, 1969, and landed 4 days later on July 20."
+		},
+		{ "question": "What is the name of the planet that is closest to the sun?",
+		  "answers": [
+		      	{ "text": "Neptune", "isCorrect": false },
+		      	{ "text": "Venus", "isCorrect": false },
+		      	{ "text": "Earth", "isCorrect": false },
+		      	{ "text": "Mercury", "isCorrect": true }
+		  	],
+		  "feedback": "Mercury is the closest planet to the sun, with an average distance of 36 million miles to the sun. During the day the temperatures on Mercury can reach 800 degrees fahrenheit, but plummet to around -230 at night due to Mercury's lack of an atmosphere."
+		},
+		{ "question": "What is the most common type of star in the Milky Way?",
+		  "answers": [
+		      	{ "text": "Yellow Drawf Star", "isCorrect": false },
+		      	{ "text": "Red Supergiant Star", "isCorrect": false },
+		      	{ "text": "Blue Giant Star", "isCorrect": false },
+		      	{ "text": "Red Dwarf Star", "isCorrect": true }
+		  	],
+		  "feedback": "Most stars in the Milky Way Galaxy are Red Dwarf stars, somewhere around 90% in fact. Red Dwarf stars are difficult to see with the naked eye because they are small and cool in comparison to other types of stars."
+		},
+		{ "question": "How many moons does Jupiter have (that we know of)?",
+		  "answers": [
+		      	{ "text": "53", "isCorrect": false },
+		      	{ "text": "79", "isCorrect": true },
+		      	{ "text": "3", "isCorrect": false },
+		      	{ "text": "23", "isCorrect": false }
+			],
+		  "feedback": "At 79 moons, Jupiter has the most moons out of all the planets in our Solar System. Jupiter's largest moons are called the \"Galilean Moons\" and were discovered in 1610 by Galileo."
+		},
+		{ "question": "What is the hottest known place in the Universe?",
+		  "answers": [
+		      	{ "text": "The Sun", "isCorrect": false },
+		      	{ "text": "Supernovas", "isCorrect": false },
+		      	{ "text": "The Virgo Constellation", "isCorrect": true },
+		      	{ "text": "A black hole", "isCorrect": false }
+		  	],
+		  "feedback": "The Virgo Constellation is home to the hottest known place in the universe. Here many galaxies have collided and produced a cloud of superheated gas that is 300,000,000 Degrees Celcius! (yes you read that right)" 
+		},
+		{ "question": "What is the trail that follows a comet called?",
+		  "answers": [
+		      	{ "text": "The debris field", "isCorrect": false },
+		      	{ "text": "The tail", "isCorrect": true },
+		      	{ "text": "The spray", "isCorrect": false },
+		     	{ "text": "The head", "isCorrect": false }
+		  	],
+		  "feedback": "Commonly made of Dust, the trail behind a comet is called the Tail. The tail is formed as the comet approaches the inner Solar System and parts of the comet nucleus begin to vaporize from the increased temperatures."
+		}, 
+		{ "question": "What direction does the sun always rise from?",
+		  "answers": [
+		      	{ "text": "North", "isCorrect": false },
+		      	{ "text": "South", "isCorrect": false },
+		      	{ "text": "East", "isCorrect": true },
+		      	{ "text": "West", "isCorrect": false }
+		  	],
+		  "feedback": "No matter where on earth you are the sun will always rise from the East. Because the earth will always rotate the same direction, if the sun rises in the west something is very wrong."
+		},
+		{ "question": "What is the proper name for the sun?",
+		  "answers": [
+		      	{ "text": "Sirius", "isCorrect": false },
+		      	{ "text": "Sol", "isCorrect": true },
+		      	{ "text": "Lo", "isCorrect": false },
+		      	{ "text": "Orion", "isCorrect": false }
+		  	],
+		  "feedback": "The proper name of the sun, \"Sol\", comes from Latin and was originally a personification of the Sun and a Roman god. This word is the root for the word \"Solar\" which means relating to the sun."
+		},
+		{ "question": "What is the name of the space probe that is deepest into space?",
+		  "answers": [
+		      	{ "text": "Cassini-Huygens", "isCorrect": false },
+		      	{ "text": "Voyager 1", "isCorrect": true },
+		      	{ "text": "Voyager 2", "isCorrect": false },
+		      	{ "text": "Parker Solar Probe", "isCorrect": false }
+		  	],
+		  "feedback": "Voyager 1 is the furthest space probe that humanity has sent in to Space. This was the first probe to ever exit the Solar System and reach deep space. It has been operating for 40+ years and is still going strong!"
+		}
+	]
+}
