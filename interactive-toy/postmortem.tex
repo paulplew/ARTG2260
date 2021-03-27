@@ -1,0 +1,21 @@
+\documentclass[12 pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyvrb}
+\setlength\parindent{24pt}
+
+\title{Project2 Post-Mortem}
+\author{Paul Plew}
+\date{March 05, 2021}
+
+\begin{document}
+
+\maketitle
+
+\section{Post-Mortem}
+\hspace{\parindent} For this project I originally had the idea to make a game where you pour particles of sand onto the screen. I would implement an array of all the sand particles then just have them fall until they reach the bottom. As I implemented this, I thought that it could be much more interesting. I decided to keep the idea of placing particles on the screen, but I gave them more life. I implemented gravity and friction for each particle on the screen, as well as a collision detection system with the sides of the screen that would negate the velocity upon collision. To make my project more visually appealing I added some short (but in my opinion) slick animations to the start screen and the reset; in addition to that I made the balls vary in their size and color to add some variety. Finally, I implemented 3 different color choices for the 3 colors in a computer system red, green, and blue. Similarly, to how I implemented variety with size I also implemented variety with the color by randomly choosing a value between two numbers of my choosing. Another feature I added is a highlight in the corner of the balls that follows them across the screen. The highlight uses the atan2 method to calculate the position of the arc. Finally, my favorite feature to watch is the mouse magnet, where I used atan2 once more to make all the balls follow the mouse. 
+\section{Issues}
+\hspace{\parindent} One of the most prominent issues I ran into was the issue of Lag, at first, I had no issues and could have upwards of 1000 balls on the screen before I ran into issues. As I implemented more of the features each frame used more processing power and the lag would become unbearable at anything over 250 balls. In order to mitigate this issue, I implemented a maximum size for the array of balls and if it is over that size, I simply remove the first ball and add a new one at the end. This way the most recent balls stay on the screen, but the old balls disappear. The limit I set was 200 balls because this is close to where my own computer experienced lag, but the effect could be drastically different on other computers. In the future I would take into account other computers that may be slower than my own. 
+\section{Creative Process}
+\hspace{\parindent} My creative process for this project was the opposite of what it was on the first one. The first project followed the path that I set out to make and ended up falling short in some areas. This project on the other hand exceeded my expectations for myself and while it was difficult to implement and took a long time, I am blown away at what I accomplished. As I progressed on this project I kept coming up with new ideas and new features to make the project that much more fun to mess around with. For the next project I hope to keep this excitement and get started earlier so I can make it more polished.
+
+\end{document}
