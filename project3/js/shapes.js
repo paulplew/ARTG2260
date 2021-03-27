@@ -210,22 +210,4 @@ class CartPt {
     this.x = x;
     this.y = y;
   }
-
-  // returns the angle from this position to the middle of the scene
-  angleToMiddle() {
-    return atan2(
-      Math.abs((height * 0.5) - this.y + 100),
-      Math.abs((width * 0.5) - this.x + 100));
-  }
-
-  // returns the distance to the middle of the scene
-  distToOrigin() {
-    return 50;
-  }
-
-  // adds the given CartPt to this one
-  set(other) {
-    this.x = other.x;
-    this.y = other.y;
-  }
 }
