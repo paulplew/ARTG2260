@@ -1,4 +1,4 @@
-let numShapes = 10;
+let numShapes = 30;
 let colors =
   ['#FF3300',
     '#32A0D3',
@@ -103,8 +103,6 @@ class Rectangle extends Shape {
     rect(0, 0, this.width, this.height);
     pop();
   }
-
-
 }
 
 // represents a square shape that is a rectangle
