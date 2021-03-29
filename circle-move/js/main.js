@@ -83,7 +83,6 @@ class Circle {
 	}
 
 	draw() {
-
 		let inter = map(this.life % 100, 0, 99, 0, 1);
 		let c = lerpColor(this.c1, this.c2, inter);
 		fill(c);
