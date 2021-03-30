@@ -1,4 +1,4 @@
-let numShapes = 30;
+let numShapes = 10;
 let colors =
   ['#FF3300',
     '#32A0D3',
@@ -29,7 +29,7 @@ class Shape {
     // add/subtract this amount to each shape per frame
     let scale = 0.5;
     // switch the sizing every 20 frames
-    if (frameCount % 20 - (speed * 400) === 0) {
+    if (frameCount % 20 === 0) {
       this.toggleSizeUp();
     }
 
