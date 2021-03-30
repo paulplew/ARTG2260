@@ -1,15 +1,16 @@
 // Global Variables
 let mouseCircle;
+let erasing = false;
 let oldCircles = [];
 let colors = [
-'#B58900',
-'#CB4B16',
-'#DC322F',
-'#D33682',
-'#6C71C4',
-'#268BD2',
-'#2AA198',
-'#859900'
+	'#B58900',
+	'#CB4B16',
+	'#DC322F',
+	'#D33682',
+	'#6C71C4',
+	'#268BD2',
+	'#2AA198',
+	'#859900'
 ];
 
 // setup function
@@ -38,9 +39,10 @@ function draw() {
 	if (erasing && oldCircles.length === 0) {
 		erasing = false;
 		document.title = "Click Me!"
+
 	// erase the last circle every 10 frames
 	} else if (erasing) {
-		if (frameCount % 10 === 0) {
+		if (frameCount % 5 === 0) {
 			// change the title from `Erasing' to `Erasing...'
 			if (document.title === "Erasing...") {
 				document.title = "Erasing"
@@ -57,9 +59,9 @@ function draw() {
 
 // class to represent a circle that can be drawn
 class Circle {
-	constructor(positionX, positionY) {
-		this.x = positionX;
-		this.y = positionY;
+	constructor(posnX, posnY) {
+		this.x = posnX;
+		this.y = posnY;
 		this.radius = 30;
 		this.increasing = true;
 		this.life = 0;
@@ -67,13 +69,13 @@ class Circle {
 		this.c2 = color(colors[(int)(Math.random() * colors.length)]);
 	}
 
-	returns the X position
-	get positionX() {
+	// returns the X position
+	get posnX() {
 		return this.x;
 	}
 
 	// returns the Y position
-	get positionY() {
+	get posnY() {
 		return this.y;
 	}
 
@@ -119,26 +121,43 @@ class Circle {
       		circle(0, 0, this.radius);
      		pop();
 	}
+
+	// checks if the circle has collided with another circle
+	collideWith(other) {
+		if (other instanceof Circle) {
+			let distX = other.posnX - this.posnX;
+			let distY = other.posnY - this.posnY;
+			let distance = Math.sqrt((distX * distX) + (distY * distY));
+			return distance <= (this.radius + other.radius) / 2;
+		} else {
+			return false;
+		}
+	}
 }
 
 // draws and updates all the circles that exist
 function drawCircles() {
 	// lerp the location of the mouse circle so it moves smoothly
-	mouseCircle.set(lerp(mouseCircle.positionX, mouseX, 0.05), lerp(mouseCircle.positionY, mouseY, 0.05));
+	mouseCircle.set(lerp(mouseCircle.posnX, mouseX, 0.05), lerp(mouseCircle.posnY, mouseY, 0.05));
 	mouseCircle.update();
 	mouseCircle.draw();
 
 	// update and draw all the old circles
 	for (let i = 0; i < oldCircles.length; i++) {
+		let oldCircle = oldCircles[i];
 		oldCircles[i].update();
 		oldCircles[i].draw();
+
+		if (oldCircle.life >= 50 && oldCircle.collideWith(mouseCircle)) {
+			oldCircles.splice(i, 1);
+		}
 	}
 }
 
 // called when the mouse is clicked
 function mouseClicked() {
 	// add a new circle at the current position of the mouse circle
-	oldCircles.push(new Circle(mouseCircle.positionX, mouseCircle.positionY));
+	oldCircles.push(new Circle(mouseCircle.posnX, mouseCircle.posnY));
 }
 
 // called when a key is pressed
