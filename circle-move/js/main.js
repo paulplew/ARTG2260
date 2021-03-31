@@ -3,14 +3,14 @@ let mouseCircle;
 let erasing = false;
 let oldCircles = [];
 let colors = [
-	'#B58900',
-	'#CB4B16',
-	'#DC322F',
-	'#D33682',
-	'#6C71C4',
-	'#268BD2',
-	'#2AA198',
-	'#859900'
+'#B58900',
+'#CB4B16',
+'#DC322F',
+'#D33682',
+'#6C71C4',
+'#268BD2',
+'#2AA198',
+'#859900'
 ];
 
 // setup function
@@ -30,10 +30,10 @@ function draw() {
 	if (windowWidth > width || windowHeight > height 
 		|| windowWidth < width || windowHeight < height) {
 		createCanvas(windowWidth, windowHeight);
-	} 
-	
-	background('#FDF6E33A');
-	
+} 
+
+background('#FDF6E33A');
+
 	// if the screen is erasing and the length of the old
 	// circles is 0, stop erasing
 	if (erasing && oldCircles.length === 0) {
@@ -41,15 +41,15 @@ function draw() {
 		document.title = "Click Me!"
 
 	// erase the last circle every 10 frames
-	} else if (erasing) {
-		if (frameCount % 5 === 0) {
+} else if (erasing) {
+	if (frameCount % 5 === 0) {
 			// change the title from `Erasing' to `Erasing...'
 			if (document.title === "Erasing...") {
 				document.title = "Erasing"
 			} else {
 				document.title += "."
 			}
-		oldCircles.shift();
+			oldCircles.shift();
 		}
 	}
 	
@@ -57,88 +57,11 @@ function draw() {
 	drawCircles();
 }
 
-// class to represent a circle that can be drawn
-class Circle {
-	constructor(posnX, posnY) {
-		this.x = posnX;
-		this.y = posnY;
-		this.radius = 30;
-		this.increasing = true;
-		this.life = 0;
-		this.c1 = color(colors[(int)(Math.random() * colors.length)]);
-		this.c2 = color(colors[(int)(Math.random() * colors.length)]);
-	}
-
-	// returns the X position
-	get posnX() {
-		return this.x;
-	}
-
-	// returns the Y position
-	get posnY() {
-		return this.y;
-	}
-
-	update() {
-		this.life ++;
-		
-		// switch the boolean that represents increasing
-		if (this.life % 20 === 0) {
-			this.increasing = !this.increasing;
-		}
- 		
-		// set the first color to the second pick a new color
- 		if (this.life % 100 === 0) {
- 			this.c1 = this.c2;
- 			this.c2 = color(colors[(int)(Math.random() * colors.length)]);
- 		}
-		
-		// resize the circle
-		if (this.increasing) {
-			this.radius += 0.5;
-		} else {
-			this.radius -= 0.5;
-		}
-	}
-
-	// change the X and Y position of this circle
-	set(newX, newY) {
-		this.x = newX;
-		this.y = newY;
-	}
-	
-	// draw this circle
-	draw() {
-		// liner interpolate the color from the old color
-		// to the new color
-		let inter = map(this.life % 100, 0, 99, 0, 1);
-		let c = lerpColor(this.c1, this.c2, inter);
-		fill(c);
-	
-		// draw this circle
-		push();
-      		translate(this.x, this.y);
-      		circle(0, 0, this.radius);
-     		pop();
-	}
-
-	// checks if the circle has collided with another circle
-	collideWith(other) {
-		if (other instanceof Circle) {
-			let distX = other.posnX - this.posnX;
-			let distY = other.posnY - this.posnY;
-			let distance = Math.sqrt((distX * distX) + (distY * distY));
-			return distance <= (this.radius + other.radius) / 2;
-		} else {
-			return false;
-		}
-	}
-}
-
 // draws and updates all the circles that exist
 function drawCircles() {
 	// lerp the location of the mouse circle so it moves smoothly
-	mouseCircle.set(lerp(mouseCircle.posnX, mouseX, 0.05), lerp(mouseCircle.posnY, mouseY, 0.05));
+	mouseCircle.x = lerp(mouseCircle.x, mouseX, 0.05);
+	mouseCircle.y = lerp(mouseCircle.y, mouseY, 0.05);
 	mouseCircle.update();
 	mouseCircle.draw();
 
@@ -157,7 +80,7 @@ function drawCircles() {
 // called when the mouse is clicked
 function mouseClicked() {
 	// add a new circle at the current position of the mouse circle
-	oldCircles.push(new Circle(mouseCircle.posnX, mouseCircle.posnY));
+	oldCircles.push(new Circle(mouseCircle.x, mouseCircle.y));
 }
 
 // called when a key is pressed
