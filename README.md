@@ -1,7 +1,7 @@
 # ARTG2260
 Projects for ARTG2260 at Northeastern University spring 2020
 
-## <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Processing_3_logo.png/240px-Processing_3_logo.png" width="50" style="filter:grayscale(100%);"/>
+## <a href="https://processing.org/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Processing_3_logo.png/240px-Processing_3_logo.png" width="50"/></a>
 The `personal-introduction` project is a simple introduction slideshow like program written using `Java processing`.
 
 ## <img src="https://p5js.org/assets/img/p5js.svg" width="50" filter: grayscale(100%);/>
