@@ -48,7 +48,10 @@
 
 \newpage
 \section{Software Specification}
-\hspace{\parindent}
+\subsection{Technical Information}
+\hspace{\parindent} This program will use a cell class to contain a cell with walls. The walls will be removed depending on how the algorithm progresses through them. Each maze will be an array of these cells behind the scenes and as the mazes are generated the array of cells will be updated, and iterated over multiple times. \\
+\hspace*{\parindent} The program will have two different `modes' where the user can either watch mazes generate over and over until they find one they want to print, or a mode where the user can solve an algorithmically generated maze (either in the application itself or printed out and solve it by hand). \\
+\hspace*{\parindent} The javascript will be written using the \verb|p5.js| libraries and will contain two top classes. The first class will represent cells and the second will represents the world. The world class will be extended by multiple subclasses, each representing a state of the world. These classes will be named like: \verb|start| \verb|generate|, \verb|play|, and \verb|print|. The draw function will then ask the world object what the current state is and will show the appropriate state
 \subsection{User Story Pseudo Code}
 \verb|user|:
 \hfill\begin{minipage}{\dimexpr\textwidth-1cm}
@@ -84,11 +87,6 @@
 	\draw [arrow] (print) -| node[fill=white,inner sep=2pt, xshift=-4cm] {no}+(right:6.5cm) |- +(up:9.5cm) -- (start);
 	\draw [arrow] (ppage) -| +(right:9cm) |- (up:1.5cm) -- (start);
 \end{tikzpicture}
-
-\subsection{Technical Information}
-\hspace{\parindent} This program will use a cell class to contain a cell with walls. The walls will be removed depending on how the algorithm progresses through them. Each maze will be an array of these cells behind the scenes and as the mazes are generated the array of cells will be updated, and iterated over multiple times. \\
-\hspace*{\parindent} The program will have two different `modes' where the user can either watch mazes generate over and over until they find one they want to print, or a mode where the user can solve an algorithmically generated maze (either in the application itself or printed out and solve it by hand). \\
-\hspace*{\parindent} The javascript will be written using the \verb|p5.js| libraries and will contain two top classes. The first class will represent cells and the second will represents the world. The world calss will be extended by multiple subclasses, each representing a state of the world. The draw function will determine which state the world is currently in and will show the approprate screen. 
 
 \newpage
 \pagenumbering{gobble}
