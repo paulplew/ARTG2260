@@ -1,6 +1,8 @@
 let startState = true;
-let playState = false;
-let generateState = false;
+let selectionState = false;
+let mazeState = false;
+let mazePlayState = false;
+let mazeGenerateState = false;
 
 let depthFirst = true;
 let kruskal = false;
@@ -9,64 +11,87 @@ let animate = true;
 
 let print = false;
 
-let backgroundColor = '#A188A680';
-let wallColor = '#00000088';
+let backgroundColor = '#fe795f80';
+let wallColor = '#333333';
 let highlightColor = '#FEB95F';
 
 let maze = [];
-let cellSize = 50;
+let cellSize = 25;
 let rows;
 let cols;
 
+// setup function
 function setup() {
 	rectMode(CENTER);
 	textAlign(CENTER, CENTER);
-	strokeWeight(2);
 	noStroke();
-	createCanvas(windowWidth, windowHeight);
+	if (windowWidth < 675 && windowHeight > 300) {
+		createCanvas(675, windowHeight)
+	} else if (windowWidth >= 675 && windowHeight < 450) {
+		createCanvas(windowWidth, 450);
+	} else {
+		createCanvas(windowWidth, windowHeight);
+	}
 	frameRate(24);
 }
+ 
 
+// draw function
 function draw() {
 	if (startState) {
 		startDraw();
-	} else if (playState) {
+	} else if (selectionState) {
+		selectionDraw();
+	} else if (mazeState) {
 		if (depthFirst) {
-			depthFirstDraw();
+			mazeDraw();
 		}
-	} else if (generateState) {
-
 	}
 }
-
+ 
+// handler for mouse clicks
 function mouseClicked() {
 	if (startState) {
 		startClicked();
+	} else if (selectionState) {
+		selectionClicked();
+	} else if (mazeState) {
+		playClicked();
 	}
 }
 
+// handler for key presses
+function keyPressed() {
+	if (mazeState) {
+		mazeKeyPressed(keyCode);
+	}
+}
+
+// returns the index in a 1d array with the given x and y coordinates
+// if the array was a 2d
 function getIndex(x, y) {
 	if (x < 0 || y < 0 || x > rows - 1 || y > cols - 1) {
 		return -1;
 	}
 	return x + (y * rows);
 }
+ 
+// updates the milliseconds seconds and minutes of a timer
+function timer(x, y) {
+	// adapted from https://openprocessing.org/sketch/181522
+	if (int(millis()/100)  % 10 != millisecs){
+    	millisecs++;
+  	}
 
-function removeWalls(a, b) {
-  let x = a.x - b.x;
-  if (x === 1) {
-    a.sides[3] = false;
-    b.sides[1] = false;
-  } else if (x === -1) {
-    a.sides[1] = false;
-    b.sides[3] = false;
-  }
-  let y = a.y - b.y;
-  if (y === 1) {
-    a.sides[0] = false;
-    b.sides[2] = false;
-  } else if (y === -1) {
-    a.sides[2] = false;
-    b.sides[0] = false;
-  }
+  	if (millisecs >= 10){
+    	millisecs -= 10;
+    	seconds++;
+  	}
+
+  	if (seconds >= 60){
+    	seconds -= 60;
+    	minutes++;
+  	}
+
+
 }
