@@ -1,15 +1,14 @@
-let animateButton;
-let title;
 let startHasBeenSetup = false;
 
+// start setup function
 function startSetup() {
 	startHasBeenSetup = true;
-	animateButton = new Button(width / 2, (2 * height / 3) - 75, 300, 100);
-    generateButton = new Button(width / 2, (2 * height / 3) + 75, 300, 100);
-
-	title = new Button(width / 2, height / 4, 500, 200);
+    animateButton = new Button(width / 2, (2 * height / 3) - 75, 300, 100, "#00000000");
+    generateButton = new Button(width / 2, (2 * height / 3) + 75, 300, 100, "#00000000");
+	title = new Button(width / 2, height / 4, 500, 200, "#00000000");
 }
-
+ 
+// start draw function
 function startDraw() {
 	background(backgroundColor);
 
@@ -17,36 +16,30 @@ function startDraw() {
     	startSetup();
 	}
 
-    textSize(32);
     if (animateButton.mouseCollide()) {
-        highlightColor = '#FEB95FBB';
-        animateButton.overlayText("Animate");
-    	highlightColor = '#FEB95F'
+        animateButton.overlayText("Animate", 50, highlightColor);
     } else {
-    	animateButton.overlayText("Animate");
+    	animateButton.overlayText("Animate", 45, wallColor);
     }
 
-    textSize(32);
     if (generateButton.mouseCollide()) {
-        highlightColor = '#FEB95FBB';
-        generateButton.overlayText("Generate");
-        highlightColor = '#FEB95F'
+        generateButton.overlayText("Generate", 50, highlightColor);
     } else {
-        generateButton.overlayText("Generate");
+        generateButton.overlayText("Generate", 45, wallColor);
     }
     
-
-    textSize(75);
-    title.overlayText("Maze\nMaker")
+    title.overlayText("Maze Maker", 75, wallColor);
 }
-
+ 
+// handler for mouse clicks in the start screen
 function startClicked() {
 	if (animateButton.mouseCollide()) {
 		startState = false;
-		playState = true;
+		animate = true;
+		selectionState = true;
 	} else if (generateButton.mouseCollide()) {
         startState = false;
         animate = false;
-        playState = true;
+        selectionState = true;
     }
 }
