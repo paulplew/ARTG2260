@@ -1,52 +1,132 @@
 let future = [];
 let depthHasBeenSetup = false;
+let win = false;
 let offsetX, offsetY, current;
+let backButton, refreshButton, saveButton, playButton, restartButton;
+let millisecs = 0; 
+let seconds = 0;
+let minutes = 0;
 
 // sets up the depth first maze generator
 function depthFirstSetup() {
-	rows = floor(width / cellSize);
-	cols = floor(height / cellSize);
+	mazeGenerateState = true;
+	future = [];
+	maze = [];
+	rows = floor(width  / cellSize) - 1;
+	cols = floor((height - 100) / cellSize) - 1;
 
 	offsetX = width - (rows * cellSize);
-	offsetY = height - (cols * cellSize);
+	offsetY = height - 100 - (cols * cellSize);
 
 	depthHasBeenSetup = true;
  	for (let j = 0; j < cols; j++) {
     	for (let i = 0; i < rows; i++) {
-      	let cell = new DepthFirstCell(i, j);
+      	let cell = new Cell(i, j);
       	maze.push(cell);
     	}	
   	}
 
-  	// maze[getIndex(cols - 1, rows - 1)].exit = true;
   	current = maze[0];
+
+  	backButton = new Button(width / 2 - 225, height - 55, 125, 50, wallColor);
+  	refreshButton = new Button(width / 2 - 75, height - 55, 125, 50, wallColor);
+  	saveButton = new Button(width / 2 + 75, height - 55, 125, 50, wallColor);
+  	playButton = new Button(width / 2 + 225, height - 55, 125, 50, wallColor);
 }
 
-// represents a maze generation using depth first algorithm
-function depthFirstDraw() {
-	background(backgroundColor);
-
+// draws the maze generation using a depth first search algorithm 
+function mazeDraw() {
 	if (!depthHasBeenSetup) {
+		background(backgroundColor);
 		depthFirstSetup();
-	} 
+	} else if (mazeGenerateState) {
+		background(backgroundColor);
+		if (backButton.mouseCollide()) {
+	    	backButton.overlayText("back", 35, highlightColor);
+		} else {
+	   		backButton.overlayText("back", 30, highlightColor);
+		}
+	    
+		if (future.length === 0) {
+			if (refreshButton.mouseCollide()) {
+		        refreshButton.overlayText("new", 35, highlightColor);
+		    } else {
+		    	refreshButton.overlayText("new", 30, highlightColor);
+		    }
 
-	for(let i = 0; i < maze.length; i++) {
-		maze[i].draw();
-	}
+			if (saveButton.mouseCollide()) {
+		        saveButton.overlayText("save", 35, highlightColor);
+		    } else {
+		    	saveButton.overlayText("save", 30, highlightColor);
+		    }
 
-	if (animate) {
-		updateNext();
-	} else {
-		generateMaze();
+		    if (playButton.mouseCollide()) {
+		        playButton.overlayText("play", 35, highlightColor);
+		    } else {
+		    	playButton.overlayText("play", 30, highlightColor);
+		    }
+		}
+
+
+		for(let i = 0; i < maze.length; i++) {
+			maze[i].draw();
+		}
+
+		if (animate) {
+			updateNext();
+		} else {
+			generateMaze();
+		}
+	} else if (mazePlayState) {
+		background(backgroundColor);
+		if (backButton.mouseCollide()) {
+	    	backButton.overlayText("back", 35, highlightColor);
+		} else {
+	   		backButton.overlayText("back", 30, highlightColor);
+		}
+
+		if (refreshButton.mouseCollide()) {
+	        refreshButton.overlayText("restart", 35, highlightColor);
+	    } else {
+	    	refreshButton.overlayText("restart", 30, highlightColor);
+	    }
+
+	    timer(width / 2 + 225, height - 52);
+  		textSize(35);
+	    text(nf(minutes, 2) + ":" + nf(seconds, 2) + "." + nf(millisecs, 1), width / 2 + 225, height - 52);
+
+	    current.highlight();
+		for (let i = 0; i < maze.length; i++) {
+			maze[i].draw();
+		}
+	} else if (mazeEndState) {
+		background(highlightColor);
+
+		if (backButton.mouseCollide()) {
+	    	backButton.overlayText("home", 35, highlightColor);
+		} else {
+	   		backButton.overlayText("home", 30, highlightColor);
+		}
+
+		fill(backgroundColor);
+  		textSize(35);
+	    text(nf(minutes, 2) + ":" + nf(seconds, 2) + "." + nf(millisecs, 1), width / 2 + 225, height - 52);
+		for (let i = 0; i < maze.length; i++) {
+			maze[i].draw();
+		}
+
 	}
 }
 
+// updates the next cell on the stack
 function updateNext() {
 	current.visit();
-	current.highlight();
+	if (future.length > 0) {
+		current.highlight();
+	}
 	let next = current.neighbor();
 
-	// if there is at least one neighbor (next != undefined)
+	// if there is at least one neighbor (next is defined)
 	if (next) {
 	    next.visit();
 	    future.push(current);
@@ -57,93 +137,150 @@ function updateNext() {
 	}
 }
 
+// generates the entire maze in one frame 
 function generateMaze() {
+	// while there are cells to be updated
 	updateNext();
 	while (future.length > 0) {
 		updateNext();
 	}
 }
 
-// represents a cell in a maze generated using the depth first method
-function DepthFirstCell(x, y) {
-	// this mazes position
-	this.x = x;
-	this.y = y;
-
-	// the sides of this maze that contain walls
-	this.sides = [true, true, true, true];
-
-	this.exit = false;
-
-	// has this cell been visited before
-	this.visited = false
-
-	// visits this cell
-	this.visit = function() {
-		this.visited = true;
-	}
-
-	this.highlight = function() {
-		noStroke();
-      	fill(highlightColor);
-      	rect(
-      		(offsetX / 2) + (this.x * cellSize) + cellSize / 2,
-      		(offsetY / 2) + (this.y * cellSize) + cellSize / 2,
-      		cellSize - 1, 
-      		cellSize - 1);
-	}
-
-	// updates the list of this cells neighbors
-	this.neighbor = function() {
-		let neighbors = [];
-
-		let top = maze[getIndex(this.x, this.y - 1)]
-		let bottom = maze[getIndex(this.x, this.y + 1)]
-		let left = maze[getIndex(this.x - 1, this.y)]
-		let right = maze[getIndex(this.x + 1, this.y)]
-
-		if (top && !top.visited) {
-			neighbors.push(top);
-		}
-		if (bottom && !bottom.visited) {
-			neighbors.push(bottom);
-		}
-		if (left && !left.visited) {
-			neighbors.push(left);
-		}
-		if (right && !right.visited) {
-			neighbors.push(right);
-		}
-
-		if (neighbors.length > 0) {
-      		let r = floor(random(0, neighbors.length));
-      		return neighbors[r];
-    	} else {
-      		return undefined;
-    	}
-	}
-    
-	// draw this cell
-	this.draw = function() {
-		let xPos = (offsetX / 2) + (this.x * cellSize);
-		let yPos = (offsetY / 2) + (this.y * cellSize);
-		stroke(wallColor);
-
-		// place a wall on the top of the cell
-		if (this.sides[0]) {
-			line(xPos, yPos, xPos + cellSize, yPos);
-		}
-		// place a wall on the bottom of the cell
-		if (this.sides[1]) {
-			line(xPos + cellSize, yPos, xPos + cellSize, yPos + cellSize);
-		}
-		// place a wall on the right of the cell
-		if (this.sides[2]) {
-			line(xPos + cellSize, yPos + cellSize, xPos, yPos + cellSize);
-		}
-		// place a wall on the left of the cell
-		if (this.sides[3]) {
-			line(xPos, yPos + cellSize, xPos, yPos);
-		}
-	};
+// handler for the mouse click in the maze state
+function playClicked() {
+	if (mazeGenerateState) {
+		generateStateClicked();
+	} else if (mazePlayState) {
+		playStateClicked();
+	} else if (mazeEndState) {
+		endStateClicked();
+	}		
 }
+
+// handler for the mouse click in the generation state
+function generateStateClicked() {
+	if (backButton.mouseCollide()) {
+		// returns to the start screen
+		depthHasBeenSetup = false;
+		mazeState = false;
+		mazePlayState = false;
+		mazeGenerateState = true;
+		selectionState = true;
+	} else if (future.length === 0) {
+		// if these buttons are active
+		if (refreshButton.mouseCollide()) {
+			// resets up the maze to be generated again
+			depthHasBeenSetup = false;
+		} else if (saveButton.mouseCollide()) {
+			// draws one frame and saves that frame to be printed later
+			background('#FFFFFF');
+			push();
+			translate(0, 50);
+			for(let i = 0; i < maze.length; i++) {
+				maze[i].draw();
+			}
+			pop();
+			saveCanvas("maze", "jpg");
+		} else if (playButton.mouseCollide()) {
+			// starts the maze game
+			mazeGenerateState = false
+			mazePlayState = true;
+		}
+	}
+}
+
+// handler for the mouse click in the play state
+function playStateClicked() {
+	if (backButton.mouseCollide()) {
+		// resets the clock and returns one screen
+		for (let i = 0; i < maze.length; i++) {
+			maze[i].color = "#FFFFFF00";
+		}
+		current = maze[getIndex(0, 0)];
+		millisecs = 0;
+		seconds = 0;
+		minutes = 0;
+		mazePlayState = false;
+		mazeGenerateState = true;
+	} else if (refreshButton.mouseCollide()) {
+		// resets the clock and restarts the maze
+		for (let i = 0; i < maze.length; i++) {
+			maze[i].color = "#FFFFFF00";
+		}
+		current = maze[getIndex(0, 0)];
+		millisecs = 0;
+		seconds = 0;
+		minutes = 0;
+	}
+}
+
+// handler for the mouse click in the end state
+function endStateClicked() {
+	// returns to the start
+	if (backButton.mouseCollide()) {
+		startState = true;
+		mazeState = false;
+		mazeEndState = false;
+		depthHasBeenSetup = false;
+	}
+}
+
+// handler for the key pressed in the maze state
+function mazeKeyPressed(keyCode) {
+	if (mazePlayState) {
+		playStateKeyPressed(keyCode);
+	}
+}
+
+// handler for the key pressed in the play state
+function playStateKeyPressed(keyCode) {
+	// 38 == UP
+	// 39 == RIGHT
+	// 40 == DOWN
+	// 37 == LEFT
+
+	if(keyCode === 38 && !current.sides[0]) { // top
+			current.color = backgroundColor;
+			current = maze[getIndex(current.x, current.y - 1)];
+	} else if(keyCode === 39 && !current.sides[1]) { // right
+		if (current.x === rows - 1 && current.y === cols - 1) {
+			current.color = backgroundColor;
+			mazePlayState = false;
+			mazeEndState = true;
+		} else {
+			current.color = backgroundColor;
+			current = maze[getIndex(current.x + 1, current.y)];
+		}
+	} else if(keyCode === 40 && !current.sides[2]) { // bottom
+		current.color = backgroundColor;
+		current = maze[getIndex(current.x, current.y + 1)];
+	} else if(keyCode === 37 && !current.sides[3]) { // left
+		if (current.x > 0 && current.y > 0) {
+			current.color = backgroundColor;
+			current = maze[getIndex(current.x - 1, current.y)];
+		}
+	}
+}
+
+// removes the walls between two cells depending on
+// where they are in relation to each other
+function removeWalls(a, b) {
+  let x = a.x - b.x;
+  if (x === 1) { // b to the left of a
+    a.sides[3] = false;
+    b.sides[1] = false;
+  } else if (x === -1) { // a to the left of b
+    a.sides[1] = false;
+    b.sides[3] = false;
+  }
+
+  let y = a.y - b.y;
+  if (y === 1) { // a above b
+    a.sides[0] = false;
+    b.sides[2] = false;
+  } else if (y === -1) { // b above a
+    a.sides[2] = false;
+    b.sides[0] = false;
+  }
+}
+
