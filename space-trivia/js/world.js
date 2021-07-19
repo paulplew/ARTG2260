@@ -35,7 +35,6 @@ class World {
   }
 
   draw() {
-    console.log(this.correct);
     switch (this.currentState) {
       case 0:
         this.drawStart();
