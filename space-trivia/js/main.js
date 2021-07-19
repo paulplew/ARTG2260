@@ -9,7 +9,7 @@ let font;
 
 // preload function
 function preload() {
-  font = loadFont("../font/roboto-mono-bold-700.ttf");
+  font = loadFont("../font/roboto-mono.ttf");
   world = new World();
   json = loadJSON('triviaQuestions.json');
 }
